@@ -39,7 +39,7 @@ const ContactUs: React.FC<ContactUsProps> = ({ onBack }) => {
   const [loading, setLoading] = useState(false);
   const [captchaToken, setCaptchaToken] = useState<string>('');
   const captchaRef = useRef<HCaptcha>(null);
-  const SITE_KEY = "cdc214ca-f1be-4956-b338-074c8160eaa6";
+  const SITE_KEY = "d960e22e-d368-4d90-b7dc-85a8d56aed50";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

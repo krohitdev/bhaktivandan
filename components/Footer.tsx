@@ -9,13 +9,6 @@ const Footer: React.FC = () => {
     <footer className="py-8 bg-stone-100 text-center text-stone-500 border-t border-stone-200">
       <div className="flex justify-center items-center gap-6 mb-4">
         <button
-          onClick={() => navigate('/')}
-          className="text-sm text-stone-600 hover:text-orange-600 transition-colors"
-        >
-          Home
-        </button>
-        <span className="text-stone-400">•</span>
-        <button
           onClick={() => navigate('/about')}
           className="text-sm text-stone-600 hover:text-orange-600 transition-colors"
         >

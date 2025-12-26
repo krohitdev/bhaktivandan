@@ -6,6 +6,7 @@ import { fetchDevotionalContent } from './services/geminiService';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Footer from './components/Footer';
+import Header from './components/Header';
 
 // Local Fallback SVG for Om Symbol
 const FALLBACK_OM_SVG = `data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23fef3c7;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23fee2e2;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grad)'/%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-size='200' fill='%23ea580c' font-family='serif'%3Eॐ%3C/text%3E%3C/svg%3E`;
@@ -150,21 +151,12 @@ function App() {
       </Helmet>
       
       {/* Header */}
-      <header className="sticky top-0 z-30 bg-white/90 backdrop-blur-md shadow-sm border-b border-orange-100">
+      {/* <header className="sticky top-0 z-30 bg-white/90 backdrop-blur-md shadow-sm border-b border-orange-100">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div 
             className="flex items-center gap-3 cursor-pointer select-none"
             onClick={resetSelection}
           >
-            {/* <div className="w-10 h-10 bg-gradient-to-tr from-orange-400 to-red-500 rounded-full flex items-center justify-center text-white font-serif font-bold text-xl shadow-md">
-              ॐ
-            </div>
-            <div>
-              <h1 className="text-xl md:text-2xl font-serif font-medium text-stone-800 tracking-tight">
-                भक्ति वंदन
-              </h1>
-              <p className="text-sm text-orange-600 font-medium tracking-wide uppercase">श्रद्धा • भक्ति • साधना</p>
-            </div> */}
             <div className="w-12 h-12 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center font-serif font-bold text-white text-2xl shadow-md">
               ॐ
             </div>
@@ -200,7 +192,7 @@ function App() {
             <div className="flex gap-4">
               <button
                 onClick={() => navigate('/about')}
-                className="px-4 py-1.5 rounded-full text-sm font-medium transition-all bg-white text-stone-600 border border-stone-200 hover:text-orange-600"
+                className="hidden lg:block px-4 py-1.5 rounded-full text-sm font-medium transition-all bg-white text-stone-600 border border-stone-200 hover:text-orange-600"
               >
                 About
               </button>
@@ -213,7 +205,8 @@ function App() {
             </div>
           )}
         </div>
-      </header>
+      </header> */}
+      <Header />
 
       {/* Main Content */}
       <main className="max-w-6xl mx-auto px-4 py-8 md:py-8 flex-grow w-full">

@@ -33,16 +33,18 @@ const Header: React.FC<HeaderProps> = ({ showNavButtons = true }) => {
         </div>
         {showNavButtons && (
           <div className="flex gap-4">
-            <button
-              onClick={() => navigate('/about')}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
-                isActive('/about')
-                  ? 'bg-orange-500 text-white'
-                  : 'bg-white text-stone-600 border border-stone-200 hover:text-orange-600'
-              }`}
-            >
-              About
-            </button>
+            <div className="hidden lg:block">
+              <button
+                onClick={() => navigate('/about')}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+                  isActive('/about')
+                    ? 'bg-orange-500 text-white'
+                    : 'bg-white text-stone-600 border border-stone-200 hover:text-orange-600'
+                }`}
+              >
+                About
+              </button>
+            </div>
             <button
               onClick={() => navigate('/contact-us')}
               className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
