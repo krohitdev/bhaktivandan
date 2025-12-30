@@ -1,13 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, HashRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import { useEffect } from 'react';
 import App from './App';
 import DeityPage from './components/DeityPage';
 import ContactUs from './components/ContactUs';
 import About from './components/About';
 import PrivacyPolicy from './components/PrivacyPolicy';
+import { pageView } from './src/utils/analytics';
 // import './index.css';
+
+const Analytics = () => {
+  const location = useLocation();
+  useEffect(() => {
+    pageView(location.pathname);
+    console.log('>>', location.pathname);
+  }, [location]);
+  return null;
+};
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -19,6 +30,7 @@ root.render(
   <React.StrictMode>
     <HelmetProvider>
       <HashRouter>
+        <Analytics />
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/about" element={<About />} />
