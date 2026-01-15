@@ -292,8 +292,8 @@ function App() {
                       />
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-stone-900/80 via-transparent to-transparent flex flex-col justify-end p-4 z-20">
-                      <h3 className="text-white font-serif text-xl font-normal tracking-wide drop-shadow-md">{deity.name}</h3>
-                      <p className="text-stone-100 text-sm font-light opacity-90">
+                      <h3 className="text-white font-serif text-lg font-normal tracking-wide drop-shadow-md">{deity.hindiName}</h3>
+                      <p className="text-stone-100 text-sm font-light opacity-90 hidden">
                         {deity.hindiName}
                       </p>
                     </div>

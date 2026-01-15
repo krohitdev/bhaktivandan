@@ -108,7 +108,7 @@ const DeityPage: React.FC = () => {
         description = `Read ${deityName} Aarti lyrics in Hindi. A devotional hymn to seek divine blessings and inner peace on Bhakti Vandan.`;
         canonicalType = 'aarti';
     }
-    const canonical = `https://bhaktivandan.com.com/${canonicalType}/${deityId}`;
+    const canonical = `https://www.bhaktivandan.com/${canonicalType}/${deityId}`;
     return { title, description, canonical };
   };
 
@@ -137,7 +137,7 @@ const DeityPage: React.FC = () => {
     };
   
     const data = typeMap[type];
-    const url = `https://bhaktivandan.com.com/${data.path}/${deityId}`;
+    const url = `https://www.bhaktivandan.com/${data.path}/${deityId}`;
   
     return {
       "@context": "https://schema.org",
@@ -215,10 +215,10 @@ const DeityPage: React.FC = () => {
         ].join(", ")}
       />
 
-      <link
+      {/* <link
         rel="canonical"
         href={meta.canonical}
-      />
+      /> */}
 
       {/* Open Graph (for WhatsApp / Facebook sharing) */}
       <meta
@@ -290,8 +290,8 @@ const DeityPage: React.FC = () => {
                   <img src={getDeityImage(deity.image)} alt={deity.name} className="w-full h-full object-cover" onError={(e) => (e.currentTarget.src = FALLBACK_OM_SVG)} />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-serif text-stone-800">{deity.name}</h2>
-                  <p className="text-sm text-stone-500">{deity.hindiName}</p>
+                  <h2 className="text-2xl font-serif text-stone-800 font-[400]">{deity.hindiName}</h2>
+                  <p className="text-sm text-stone-500 hidden">{deity.hindiName}</p>
                 </div>
               </div>
 
@@ -304,7 +304,7 @@ const DeityPage: React.FC = () => {
                     currentContentType === ContentType.AARTI ? 'bg-orange-500 text-white shadow-md' : 'bg-white text-stone-600 border border-stone-200'
                   }`}
                 >
-                  Aarti
+                  आरती
                 </button>
                 <button
                   onClick={() => {
@@ -316,7 +316,7 @@ const DeityPage: React.FC = () => {
                     currentContentType === ContentType.CHALISA ? 'bg-orange-500 text-white shadow-md' : 'bg-white text-stone-600 border border-stone-200'
                   }`}
                 >
-                  Chalisa
+                  चालीसा
                 </button>
                 <button
                   onClick={() => {
@@ -328,7 +328,7 @@ const DeityPage: React.FC = () => {
                     currentContentType === ContentType.MANTRA ? 'bg-orange-500 text-white shadow-md' : 'bg-white text-stone-600 border border-stone-200'
                   }`}
                 >
-                  Mantra
+                  मंत्र
                 </button>
               </div>
             </div>

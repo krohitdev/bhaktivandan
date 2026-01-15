@@ -9,6 +9,7 @@ import ContactUs from './components/ContactUs';
 import About from './components/About';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import { pageView } from './src/utils/analytics';
+import { Canonical } from './components/Canonical';
 // import './index.css';
 
 const Analytics = () => {
@@ -29,8 +30,9 @@ const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
     <HelmetProvider>
-      <HashRouter>
+      <BrowserRouter>
         <Analytics />
+        <Canonical />
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/about" element={<About />} />
@@ -40,7 +42,7 @@ root.render(
           {/* Generic route for content type pages: /aarti/:id, /chalisa/:id, /mantra/:id */}
           <Route path="/:type/:id" element={<DeityPage />} />
         </Routes>
-      </HashRouter>
+      </BrowserRouter>
     </HelmetProvider>
   </React.StrictMode>
 );

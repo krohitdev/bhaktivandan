@@ -7,7 +7,10 @@ export enum DeityId {
   KRISHNA = 'krishna',
   RAM = 'ram',
   SARASWATI = 'saraswati',
-  VISHNU = 'vishnu'
+  VISHNU = 'vishnu',
+  VAISHNO = "vaishno",
+  KALI = "mahakali",
+
 }
 
 export enum ContentType {

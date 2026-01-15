@@ -58,11 +58,9 @@ export const fetchDevotionalContent = async (
   return {
     title: `${contentType} for ${deityName}`,
     verses: [
-      "Content is being curated.",
-      "Please chant 'Om' and meditate on the divine form.",
-      "Shanti, Shanti, Shanti."
+     "सामग्री तैयार की जा रही है।", "कृपया 'ॐ' का जाप करें और दिव्य स्वरूप का ध्यान करें।", "शांति, शांति, शांति।"
     ],
-    meaning: "Devotion resides in the heart, not just words."
+    meaning: "भक्ति हृदय में निवास करती है,\nकेवल शब्दों में नहीं।"
   };
 };
 

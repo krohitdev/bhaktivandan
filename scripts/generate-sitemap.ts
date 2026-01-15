@@ -3,7 +3,7 @@ import path from "path";
 import { DEITIES } from '../constants';
 import { ContentType } from "../types";
 
-const BASE_URL = "https://bhaktivandan.com.com"; // 🔴 change this
+const BASE_URL = "https://www.bhaktivandan.com"; // 🔴 change this
 
 // Which content types you support
 const CONTENT_TYPES = [
