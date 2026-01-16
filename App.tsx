@@ -76,18 +76,6 @@ function App() {
     return results;
   };
 
-  const handleSearchResultClick = (deity: Deity, contentType: ContentType) => {
-    const typeStr = contentType.toLowerCase();
-    navigate(`/${typeStr}/${deity.id}`);
-    setSearchQuery('');
-    setShowSearchResults(false);
-  };
-
-  const handleDeitySelect = (deity: Deity) => {
-    // navigate to the deity's Aarti page
-    navigate(`/aarti/${deity.id}`);
-  };
-
   const handleContentSelect = (type: ContentType) => {
     setContentType(type);
     if (selectedDeity) {
@@ -112,10 +100,6 @@ function App() {
   const resetSelection = () => {
     setSelectedDeity(null);
     setContent(null);
-  };
-
-  const handleContactClick = () => {
-    navigate('/contact-us');
   };
 
   // Build a map of all images in /assets/images using Vite's glob
@@ -241,14 +225,14 @@ function App() {
                 {showSearchResults && getSearchResults().length > 0 && (
                   <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-orange-200 rounded-lg shadow-lg z-50 max-h-64 overflow-y-auto">
                     {getSearchResults().map((result, idx) => (
-                      <button
+                      <a
                         key={idx}
-                        onClick={() => handleSearchResultClick(result.deity, result.contentType!)}
-                        className="w-full text-left px-4 py-2 hover:bg-orange-50 border-b border-orange-100 last:border-b-0 transition-colors"
+                        href={`/${result.contentType?.toLowerCase()}/${result.deity.id}`}
+                        className="w-full block px-4 py-2 hover:bg-orange-50 border-b border-orange-100 last:border-b-0 transition-colors"
                       >
                         <div className="font-medium text-stone-700">{result.deity.name}</div>
                         <div className="text-xs text-orange-600">{result.contentType}</div>
-                      </button>
+                      </a>
                     ))}
                   </div>
                 )}
@@ -269,10 +253,10 @@ function App() {
                 const isFallback = true; 
 
                 return (
-                  <div
+                  <a
                     key={deity.id}
-                    onClick={() => handleDeitySelect(deity)}
-                    className={`group relative overflow-hidden rounded-xl bg-white border border-orange-100/50 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 cursor-pointer bg-gradient-to-br ${deity.color}`}
+                    href={`/aarti/${deity.id}`}
+                    className={`group relative overflow-hidden rounded-xl bg-white border border-orange-100/50 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 bg-gradient-to-br ${deity.color}`}
                   >
                     <div className="aspect-[4/5] w-full overflow-hidden bg-orange-50 relative">
                       <div className="absolute inset-0 flex items-center justify-center text-orange-200">
@@ -297,7 +281,7 @@ function App() {
                         {deity.hindiName}
                       </p>
                     </div>
-                  </div>
+                  </a>
                 );
               })}
             </div>

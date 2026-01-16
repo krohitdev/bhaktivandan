@@ -10,6 +10,7 @@ import About from './components/About';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import { pageView } from './src/utils/analytics';
 import { Canonical } from './components/Canonical';
+import TermsConditions from './components/TermsCondition';
 // import './index.css';
 
 const Analytics = () => {
@@ -37,6 +38,7 @@ root.render(
           <Route path="/" element={<App />} />
           <Route path="/about" element={<About />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-and-conditions" element={<TermsConditions />} />
           <Route path="/contact-us" element={<ContactUs onBack={() => window.history.back()} />} />
           <Route path="/deity/:id" element={<DeityPage />} />
           {/* Generic route for content type pages: /aarti/:id, /chalisa/:id, /mantra/:id */}

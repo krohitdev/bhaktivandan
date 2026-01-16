@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { DEITIES } from '../constants';
 import { Deity, ContentType, DevotionalContent } from '../types';
 import { fetchDevotionalContent } from '../services/geminiService';
@@ -37,7 +37,6 @@ const getContentTypeFromType = (type?: string): ContentType => {
 
 const DeityPage: React.FC = () => {
   const { id, type } = useParams<{ id?: string; type?: string }>();
-  const navigate = useNavigate();
   const [deity, setDeity] = useState<Deity | null>(null);
   const [contentType, setContentType] = useState<ContentType>(ContentType.AARTI);
   const [content, setContent] = useState<DevotionalContent | null>(null);
@@ -187,7 +186,7 @@ const DeityPage: React.FC = () => {
     return (
       <div className="max-w-3xl mx-auto p-6 text-center">
         <p className="text-stone-600">Deity not found.</p>
-        <button onClick={() => navigate('/')} className="mt-4 text-orange-600">Back home</button>
+        <a href="/" className="mt-4 text-orange-600 inline-block hover:text-orange-700">Back home</a>
       </div>
     );
   }
@@ -296,44 +295,34 @@ const DeityPage: React.FC = () => {
               </div>
 
               <div className="flex gap-2 justify-center md:justify-end mt-4 mb-4">
-                <button
-                  onClick={() => {
-                    navigate(`/aarti/${deity.id}`);
-                  }}
-                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
-                    currentContentType === ContentType.AARTI ? 'bg-orange-500 text-white shadow-md' : 'bg-white text-stone-600 border border-stone-200'
+                <a
+                  href={`/aarti/${deity.id}`}
+                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all inline-block ${
+                    currentContentType === ContentType.AARTI ? 'bg-orange-500 text-white shadow-md' : 'bg-white text-stone-600 border border-stone-200 hover:text-orange-600'
                   }`}
                 >
                   आरती
-                </button>
-                <button
-                  onClick={() => {
-                    // const updatedMeta = getPageMeta(deity.name, deity.hindiName, deity.id, ContentType.CHALISA);
-                    // setMeta(updatedMeta);
-                    navigate(`/chalisa/${deity.id}`);
-                  }}
-                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
-                    currentContentType === ContentType.CHALISA ? 'bg-orange-500 text-white shadow-md' : 'bg-white text-stone-600 border border-stone-200'
+                </a>
+                <a
+                  href={`/chalisa/${deity.id}`}
+                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all inline-block ${
+                    currentContentType === ContentType.CHALISA ? 'bg-orange-500 text-white shadow-md' : 'bg-white text-stone-600 border border-stone-200 hover:text-orange-600'
                   }`}
                 >
                   चालीसा
-                </button>
-                <button
-                  onClick={() => {
-                    // const updatedMeta = getPageMeta(deity.name, deity.hindiName, deity.id, ContentType.MANTRA);
-                    // setMeta(updatedMeta);
-                    navigate(`/mantra/${deity.id}`);
-                  }}
-                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
-                    currentContentType === ContentType.MANTRA ? 'bg-orange-500 text-white shadow-md' : 'bg-white text-stone-600 border border-stone-200'
+                </a>
+                <a
+                  href={`/mantra/${deity.id}`}
+                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all inline-block ${
+                    currentContentType === ContentType.MANTRA ? 'bg-orange-500 text-white shadow-md' : 'bg-white text-stone-600 border border-stone-200 hover:text-orange-600'
                   }`}
                 >
                   मंत्र
-                </button>
+                </a>
               </div>
             </div>
 
-            <Reader content={content} loading={loading} onBack={() => navigate('/')} />
+            <Reader content={content} loading={loading} onBack={() => window.location.href = '/'} />
           </div>
       </main>
 
