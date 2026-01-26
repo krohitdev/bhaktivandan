@@ -301,13 +301,13 @@ function App() {
                           alt={deity.name}
                           loading="lazy"
                           className="w-full h-full object-cover transition-transform duration-700 relative z-10 deity-img opacity-80"
-                           onError={(e) => {
-    // prevent infinite loop
-    if (!e.currentTarget.dataset.fallback) {
-      e.currentTarget.dataset.fallback = "true";
-      e.currentTarget.src = FALLBACK_OM_SVG;
-    }
-  }}
+                          onError={(e) => {
+                            // prevent infinite loop
+                            if (!e.currentTarget.dataset.fallback) {
+                              e.currentTarget.dataset.fallback = "true";
+                              e.currentTarget.src = FALLBACK_OM_SVG;
+                            }
+                          }}
                           onLoad={(e) => e.currentTarget.classList.add("loaded")}
                           style={{
                             backgroundImage: `url(${blurImageSrc})`,
