@@ -7,19 +7,21 @@ import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Footer from './components/Footer';
 import Header from './components/Header';
+import './App.css';
 
 // Local Fallback SVG for Om Symbol
 const FALLBACK_OM_SVG = `data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23fef3c7;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23fee2e2;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grad)'/%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-size='200' fill='%23ea580c' font-family='serif'%3Eॐ%3C/text%3E%3C/svg%3E`;
 
 function App() {
 
-  const navigate = useNavigate(); // added
+  // const navigate = useNavigate(); // added
   const [selectedDeity, setSelectedDeity] = useState<Deity | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [contentType, setContentType] = useState<ContentType>(ContentType.AARTI);
   const [content, setContent] = useState<DevotionalContent | null>(null);
   const [loading, setLoading] = useState(false);
+  
 
   // Parse search query to extract deity name and optional content type
   const parseSearchQuery = (query: string) => {
@@ -105,12 +107,28 @@ function App() {
   // Build a map of all images in /assets/images using Vite's glob
   // Use the new query/import options so each matched file resolves to a URL string when eager-loaded.
   const imageModules = import.meta.glob('./assets/images/*.{png,jpg,jpeg,svg,webp}', { eager: true, query: '?url', import: 'default' }) as Record<string, string>;
+  
+  // 2. Blur images (specifically looking for .webp in the blur subfolder)
+  const blurModules = import.meta.glob('./assets/images/blur/*.webp', { 
+    eager: true, 
+    query: '?url', 
+    import: 'default' 
+  }) as Record<string, string>;
 
   const imageMap: Record<string, string> = Object.keys(imageModules).reduce((acc, key) => {
     const fileName = key.split('/').pop() as string;
     acc[fileName] = imageModules[key];
     return acc;
   }, {} as Record<string, string>);
+  
+  const blurImageMap: Record<string, string> = Object.keys(blurModules).reduce((acc, key) => {
+    const fileName = key.split('/').pop() as string;
+    acc[fileName] = blurModules[key];
+    return acc;
+  }, {} as Record<string, string>);
+
+  const webpImage = (name) => `${name.split('.')[0]}-blur.webp`;
+  const dietyWebpName = (name) => `${name.split('.')[0]}.webp`;
 
   const getDeityImage = (filenameOrUrl: string) => {
     // If it's an absolute or protocol URL, return as-is
@@ -122,6 +140,16 @@ function App() {
     // Otherwise return fallback SVG data URL
     return FALLBACK_OM_SVG;
   };
+  const getWebpImage = (filenameOrUrl) => {
+    if (/^https?:\/\//.test(filenameOrUrl)) return filenameOrUrl;
+
+    // If image exists in the assets map, return the resolved URL
+    if (blurImageMap[filenameOrUrl]) return blurImageMap[filenameOrUrl];
+
+    // Otherwise return fallback SVG data URL
+    return FALLBACK_OM_SVG;
+  };
+
 
   // Update document title when component mounts to ensure correct title on home page
   useEffect(() => {
@@ -249,8 +277,8 @@ function App() {
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {DEITIES.map((deity) => {
                 const imageSrc = getDeityImage(deity.image);
-                // Force fallback look since we are using the static Om SVG everywhere
-                const isFallback = true; 
+                const blurImageSrc = getWebpImage(webpImage(deity.image));
+                const webpSrc = `/assets/images/${dietyWebpName(deity.image)}`;
 
                 return (
                   <a
@@ -264,16 +292,34 @@ function App() {
                               <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                           </svg>
                       </div>
-                      <img 
-                        src={imageSrc} 
-                        alt={deity.name}
-                        loading="lazy"
-                        className={`w-full h-full object-cover transition-transform duration-700 relative z-10 ${isFallback ? ' opacity-80' : 'group-hover:scale-105'}`}
-                        onError={(e) => {
-                          e.currentTarget.src = FALLBACK_OM_SVG;
-                          e.currentTarget.className = "w-full h-full object-cover p-8 opacity-80 group-hover:scale-110 transition-transform duration-700 relative z-10";
-                        }}
-                      />
+
+                      <picture>
+                        <source srcSet={webpSrc} type="image/webp" />
+                        <img
+                          src={imageSrc}
+                          alt={deity.name}
+                          loading="lazy"
+                          className="w-full h-full object-cover transition-transform duration-700 relative z-10 deity-img opacity-80"
+                           onError={(e) => {
+    // prevent infinite loop
+    if (!e.currentTarget.dataset.fallback) {
+      e.currentTarget.dataset.fallback = "true";
+      e.currentTarget.src = FALLBACK_OM_SVG;
+    }
+  }}
+                          onLoad={(e) => e.currentTarget.classList.add("loaded")}
+                          style={{
+                            backgroundImage: `url(${blurImageSrc})`,
+                            backgroundSize: "cover",
+                            backgroundPosition: "center"
+                          }}
+                        />
+                      </picture>
+
+
+
+                      
+
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-stone-900/80 via-transparent to-transparent flex flex-col justify-end p-4 z-20">
                       <h3 className="text-white font-serif text-lg font-normal tracking-wide drop-shadow-md">{deity.hindiName}</h3>

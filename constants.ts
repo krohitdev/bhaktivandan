@@ -10,86 +10,86 @@ export const DEITIES: Deity[] = [
     color: 'from-orange-50 to-orange-100',
     description: 'The remover of obstacles and god of beginnings.'
   },
-  {
-    id: DeityId.HANUMAN,
-    name: 'Hanuman',
-    hindiName: 'श्री हनुमान',
-    image: 'hanuman.png',
-    color: 'from-red-50 to-orange-100',
-    description: 'The symbol of strength, devotion, and energy.'
-  },
-  {
-    id: DeityId.SHIVA,
-    name: 'Shiva',
-    hindiName: 'भगवान शिव',
-    image: 'shiva.png',
-    color: 'from-slate-50 to-blue-50',
-    description: 'The destroyer of evil and the transformer.'
-  },
-  {
-    id: DeityId.DURGA,
-    name: 'Durga',
-    hindiName: 'माँ दुर्गा',
-    image: 'durga.png',
-    color: 'from-red-50 to-pink-50',
-    description: 'The goddess of war, strength, and protection.'
-  },
-  {
-    id: DeityId.KALI,
-    name: 'Mahakali',
-    hindiName: 'माँ महाकाली',
-    image: 'kali-maa.png',
-    color: 'from-blue-50 to-indigo-50',
-    description: 'The fierce protector of time and the destroyer of ego and evil.'
-  },
-  {
-    id: DeityId.VISHNU,
-    name: 'Vishnu',
-    hindiName: 'भगवान विष्णु',
-    image: 'vishnu.png',
-    color: 'from-blue-50 to-indigo-50',
-    description: 'The preserver and protector of the universe.'
-  },
-  {
-    id: DeityId.LAKSHMI,
-    name: 'Lakshmi',
-    hindiName: 'माँ लक्ष्मी',
-    image: 'laxmi.png',
-    color: 'from-red-50 to-pink-50',
-    description: 'The goddess of wealth, fortune, and prosperity.'
-  },
-  {
-    id: DeityId.VAISHNO,
-    name: 'Vaishno',
-    hindiName: 'माँ वैष्णो देवी',
-    image: 'vaishno.png',
-    color: 'from-blue-50 to-indigo-50',
-    description: 'The Mother Goddess who fulfills the wishes of her children and protects them from all hardships.'
-  },
-  {
-    id: DeityId.KRISHNA,
-    name: 'Krishna',
-    hindiName: 'श्री कृष्ण',
-    image: 'krishan.png',
-    color: 'from-sky-50 to-cyan-50',
-    description: 'The god of compassion, tenderness, and love.'
-  },
-  {
-    id: DeityId.RAM,
-    name: 'Ram',
-    hindiName: 'श्री राम',
-    image: 'ram.png',
-    color: 'from-amber-50 to-orange-50',
-    description: 'The embodiment of chivalry and virtue.'
-  },
-  {
-    id: DeityId.SARASWATI,
-    name: 'Saraswati',
-    hindiName: 'माँ सरस्वती',
-    image: 'sarswati.png',
-    color: 'from-stone-50 to-yellow-50',
-    description: 'The goddess of knowledge, music, art, and wisdom.'
-  }
+  // {
+  //   id: DeityId.HANUMAN,
+  //   name: 'Hanuman',
+  //   hindiName: 'श्री हनुमान',
+  //   image: 'hanuman.png',
+  //   color: 'from-red-50 to-orange-100',
+  //   description: 'The symbol of strength, devotion, and energy.'
+  // },
+  // {
+  //   id: DeityId.SHIVA,
+  //   name: 'Shiva',
+  //   hindiName: 'भगवान शिव',
+  //   image: 'shiva.png',
+  //   color: 'from-slate-50 to-blue-50',
+  //   description: 'The destroyer of evil and the transformer.'
+  // },
+  // {
+  //   id: DeityId.DURGA,
+  //   name: 'Durga',
+  //   hindiName: 'माँ दुर्गा',
+  //   image: 'durga.png',
+  //   color: 'from-red-50 to-pink-50',
+  //   description: 'The goddess of war, strength, and protection.'
+  // },
+  // {
+  //   id: DeityId.KALI,
+  //   name: 'Mahakali',
+  //   hindiName: 'माँ महाकाली',
+  //   image: 'kali-maa.png',
+  //   color: 'from-blue-50 to-indigo-50',
+  //   description: 'The fierce protector of time and the destroyer of ego and evil.'
+  // },
+  // {
+  //   id: DeityId.VISHNU,
+  //   name: 'Vishnu',
+  //   hindiName: 'भगवान विष्णु',
+  //   image: 'vishnu.png',
+  //   color: 'from-blue-50 to-indigo-50',
+  //   description: 'The preserver and protector of the universe.'
+  // },
+  // {
+  //   id: DeityId.LAKSHMI,
+  //   name: 'Lakshmi',
+  //   hindiName: 'माँ लक्ष्मी',
+  //   image: 'laxmi.png',
+  //   color: 'from-red-50 to-pink-50',
+  //   description: 'The goddess of wealth, fortune, and prosperity.'
+  // },
+  // {
+  //   id: DeityId.VAISHNO,
+  //   name: 'Vaishno',
+  //   hindiName: 'माँ वैष्णो देवी',
+  //   image: 'vaishno.png',
+  //   color: 'from-blue-50 to-indigo-50',
+  //   description: 'The Mother Goddess who fulfills the wishes of her children and protects them from all hardships.'
+  // },
+  // {
+  //   id: DeityId.KRISHNA,
+  //   name: 'Krishna',
+  //   hindiName: 'श्री कृष्ण',
+  //   image: 'krishan.png',
+  //   color: 'from-sky-50 to-cyan-50',
+  //   description: 'The god of compassion, tenderness, and love.'
+  // },
+  // {
+  //   id: DeityId.RAM,
+  //   name: 'Ram',
+  //   hindiName: 'श्री राम',
+  //   image: 'ram.png',
+  //   color: 'from-amber-50 to-orange-50',
+  //   description: 'The embodiment of chivalry and virtue.'
+  // },
+  // {
+  //   id: DeityId.SARASWATI,
+  //   name: 'Saraswati',
+  //   hindiName: 'माँ सरस्वती',
+  //   image: 'sarswati.png',
+  //   color: 'from-stone-50 to-yellow-50',
+  //   description: 'The goddess of knowledge, music, art, and wisdom.'
+  // }
 ];
 
 export const STATIC_CONTENT: Record<string, Record<string, DevotionalContent>> = {
