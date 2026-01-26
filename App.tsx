@@ -278,7 +278,8 @@ function App() {
               {DEITIES.map((deity) => {
                 const imageSrc = getDeityImage(deity.image);
                 const blurImageSrc = getWebpImage(webpImage(deity.image));
-                const webpSrc = `/assets/images/${dietyWebpName(deity.image)}`;
+                const webpFileName = dietyWebpName(deity.image);
+                const webpSrc = imageMap[webpFileName] || FALLBACK_OM_SVG;
 
                 return (
                   <a
