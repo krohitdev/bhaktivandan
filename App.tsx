@@ -3,7 +3,7 @@ import { DEITIES } from './constants';
 import { Deity, ContentType, DevotionalContent } from './types';
 import Reader from './components/Reader';
 import { fetchDevotionalContent } from './services/geminiService';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Footer from './components/Footer';
 import Header from './components/Header';
@@ -21,16 +21,16 @@ function App() {
   const [contentType, setContentType] = useState<ContentType>(ContentType.AARTI);
   const [content, setContent] = useState<DevotionalContent | null>(null);
   const [loading, setLoading] = useState(false);
-  
+
 
   // Parse search query to extract deity name and optional content type
   const parseSearchQuery = (query: string) => {
     const lowerQuery = query.toLowerCase().trim();
     const contentTypes = ['aarti', 'chalisa', 'mantra'];
-    
+
     let deityName = lowerQuery;
     let contentTypeFilter: string | null = null;
-    
+
     // Check if query ends with a content type
     for (const ct of contentTypes) {
       if (lowerQuery.endsWith(ct)) {
@@ -39,23 +39,23 @@ function App() {
         break;
       }
     }
-    
+
     return { deityName, contentTypeFilter };
   };
 
   // Filter deities and content types based on search
   const getSearchResults = () => {
     if (!searchQuery.trim()) return [];
-    
+
     const { deityName, contentTypeFilter } = parseSearchQuery(searchQuery);
     const results: Array<{ type: 'deity' | 'content'; deity: Deity; contentType?: ContentType }> = [];
-    
+
     // Find matching deities
-    const matchingDeities = DEITIES.filter(d => 
-      d.name.toLowerCase().includes(deityName) || 
+    const matchingDeities = DEITIES.filter(d =>
+      d.name.toLowerCase().includes(deityName) ||
       d.hindiName.includes(deityName)
     );
-    
+
     matchingDeities.forEach(deity => {
       if (contentTypeFilter) {
         // If content type specified, only add that content type
@@ -63,7 +63,7 @@ function App() {
         if (contentTypeFilter === 'aarti') ct = ContentType.AARTI;
         else if (contentTypeFilter === 'chalisa') ct = ContentType.CHALISA;
         else if (contentTypeFilter === 'mantra') ct = ContentType.MANTRA;
-        
+
         if (ct) {
           results.push({ type: 'content', deity, contentType: ct });
         }
@@ -74,7 +74,7 @@ function App() {
         results.push({ type: 'content', deity, contentType: ContentType.MANTRA });
       }
     });
-    
+
     return results;
   };
 
@@ -87,7 +87,7 @@ function App() {
 
   const fetchContent = async (deity: Deity, type: ContentType) => {
     setLoading(true);
-    setContent(null); 
+    setContent(null);
     try {
       const data = await fetchDevotionalContent(deity.name, type);
       setContent(data);
@@ -104,15 +104,15 @@ function App() {
     setContent(null);
   };
 
-  // Build a map of all images in /assets/images using Vite's glob
-  // Use the new query/import options so each matched file resolves to a URL string when eager-loaded.
+  // @ts-ignore
   const imageModules = import.meta.glob('./assets/images/*.{png,jpg,jpeg,svg,webp}', { eager: true, query: '?url', import: 'default' }) as Record<string, string>;
-  
+
   // 2. Blur images (specifically looking for .webp in the blur subfolder)
-  const blurModules = import.meta.glob('./assets/images/blur/*.webp', { 
-    eager: true, 
-    query: '?url', 
-    import: 'default' 
+  // @ts-ignore
+  const blurModules = import.meta.glob('./assets/images/blur/*.webp', {
+    eager: true,
+    query: '?url',
+    import: 'default'
   }) as Record<string, string>;
 
   const imageMap: Record<string, string> = Object.keys(imageModules).reduce((acc, key) => {
@@ -120,7 +120,7 @@ function App() {
     acc[fileName] = imageModules[key];
     return acc;
   }, {} as Record<string, string>);
-  
+
   const blurImageMap: Record<string, string> = Object.keys(blurModules).reduce((acc, key) => {
     const fileName = key.split('/').pop() as string;
     acc[fileName] = blurModules[key];
@@ -161,7 +161,7 @@ function App() {
       <Helmet>
         <title>Bhakti Vandan</title>
       </Helmet>
-      
+
       {/* Header */}
       {/* <header className="sticky top-0 z-30 bg-white/90 backdrop-blur-md shadow-sm border-b border-orange-100">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -222,7 +222,7 @@ function App() {
 
       {/* Main Content */}
       <main className="max-w-6xl mx-auto px-4 py-8 md:py-8 flex-grow w-full">
-        
+
         {!selectedDeity ? (
           /* Deity Grid */
           <div className="animate-fade-in-up">
@@ -230,7 +230,7 @@ function App() {
               {/* <h2 className="text-3xl md:text-4xl font-serif font-light text-stone-700 mb-4">
                 Choose Your Deity
               </h2> */}
-              
+
               {/* Search Input */}
               <p className="text-stone-500 max-w-lg mx-auto font-light">
                 अपनी प्रार्थना शुरू करने के लिए एक दिव्य रूप चुनें। पारंपरिक आरती, चालीसा और मंत्रों का तुरंत आनंद लें।
@@ -248,19 +248,19 @@ function App() {
                   onBlur={() => setTimeout(() => setShowSearchResults(false), 200)}
                   className="w-full px-4 py-2 rounded-lg border border-orange-200 focus:outline-none focus:ring-2 focus:ring-orange-400 text-sm"
                 />
-                
+
                 {/* Search Results Dropdown */}
                 {showSearchResults && getSearchResults().length > 0 && (
                   <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-orange-200 rounded-lg shadow-lg z-50 max-h-64 overflow-y-auto">
                     {getSearchResults().map((result, idx) => (
-                      <a
+                      <Link
                         key={idx}
-                        href={`/${result.contentType?.toLowerCase()}/${result.deity.id}`}
+                        to={`/${result.contentType?.toLowerCase()}/${result.deity.id}`}
                         className="w-full block px-4 py-2 hover:bg-orange-50 border-b border-orange-100 last:border-b-0 transition-colors"
                       >
                         <div className="font-medium text-stone-700">{result.deity.name}</div>
                         <div className="text-xs text-orange-600">{result.contentType}</div>
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 )}
@@ -271,7 +271,7 @@ function App() {
                 )}
               </div>
 
-              
+
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -282,16 +282,16 @@ function App() {
                 const webpSrc = imageMap[webpFileName] || FALLBACK_OM_SVG;
 
                 return (
-                  <a
+                  <Link
                     key={deity.id}
-                    href={`/aarti/${deity.id}`}
+                    to={`/aarti/${deity.id}`}
                     className={`group relative overflow-hidden rounded-xl bg-white border border-orange-100/50 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 bg-gradient-to-br ${deity.color}`}
                   >
                     <div className="aspect-[4/5] w-full overflow-hidden bg-orange-50 relative">
                       <div className="absolute inset-0 flex items-center justify-center text-orange-200">
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12 opacity-50">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                          </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12 opacity-50">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                        </svg>
                       </div>
 
                       <picture>
@@ -302,8 +302,8 @@ function App() {
                           loading="lazy"
                           className="w-full h-full object-cover transition-transform duration-700 relative z-10 deity-img opacity-80"
                           onError={(e) => {
-                              e.currentTarget.dataset.fallback = "true";
-                              e.currentTarget.src = FALLBACK_OM_SVG;
+                            e.currentTarget.dataset.fallback = "true";
+                            e.currentTarget.src = FALLBACK_OM_SVG;
                           }}
                           onLoad={(e) => e.currentTarget.classList.add("loaded")}
                           style={{
@@ -316,7 +316,7 @@ function App() {
 
 
 
-                      
+
 
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-stone-900/80 via-transparent to-transparent flex flex-col justify-end p-4 z-20">
@@ -325,7 +325,7 @@ function App() {
                         {deity.hindiName}
                       </p>
                     </div>
-                  </a>
+                  </Link>
                 );
               })}
             </div>
@@ -333,27 +333,26 @@ function App() {
         ) : (
           /* Detail View */
           <div className="animate-fade-in">
-             {/* Mobile Tabs */}
-             <div className="flex md:hidden justify-center gap-2 mb-6">
-               {Object.values(ContentType).map((type) => (
-                 <button
-                   key={type}
-                   onClick={() => handleContentSelect(type)}
-                   className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
-                     contentType === type 
-                       ? 'bg-orange-500 text-white shadow-md' 
-                       : 'bg-white text-stone-600 border border-stone-200'
-                   }`}
-                 >
-                   {type}
-                 </button>
-               ))}
+            {/* Mobile Tabs */}
+            <div className="flex md:hidden justify-center gap-2 mb-6">
+              {Object.values(ContentType).map((type) => (
+                <button
+                  key={type}
+                  onClick={() => handleContentSelect(type)}
+                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${contentType === type
+                    ? 'bg-orange-500 text-white shadow-md'
+                    : 'bg-white text-stone-600 border border-stone-200'
+                    }`}
+                >
+                  {type}
+                </button>
+              ))}
             </div>
 
-            <Reader 
-              content={content} 
-              loading={loading} 
-              onBack={resetSelection} 
+            <Reader
+              content={content}
+              loading={loading}
+              onBack={resetSelection}
             />
           </div>
         )}
@@ -361,7 +360,7 @@ function App() {
       </main>
 
       <Footer />
-      
+
     </div>
   );
 }

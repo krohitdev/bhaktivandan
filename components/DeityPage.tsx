@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { DEITIES } from '../constants';
 import { Deity, ContentType, DevotionalContent } from '../types';
 import { fetchDevotionalContent } from '../services/geminiService';
@@ -13,6 +13,7 @@ import Footer from './Footer';
 const FALLBACK_OM_SVG = `data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23fef3c7;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23fee2e2;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grad)'/%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-size='200' fill='%23ea580c' font-family='serif'%3Eॐ%3C/text%3E%3C/svg%3E`;
 
 // Image resolver (same approach as App.tsx)
+// @ts-ignore
 const imageModules = import.meta.glob('../assets/images/*.{png,jpg,jpeg,svg,webp}', { eager: true, query: '?url', import: 'default' }) as Record<string, string>;
 const imageMap: Record<string, string> = Object.keys(imageModules).reduce((acc, key) => {
   const fileName = key.split('/').pop() as string;
@@ -30,13 +31,15 @@ const getDeityImage = (filenameOrUrl: string) => {
 const getContentTypeFromType = (type?: string): ContentType => {
   if (!type) return ContentType.AARTI;
   const t = type.toLowerCase();
-  if (t === 'chalisa') return ContentType.CHALISA;
   if (t === 'mantra') return ContentType.MANTRA;
+  if (t === 'insights') return ContentType.INSIGHTS;
+  if (t === 'chalisa') return ContentType.CHALISA;
   return ContentType.AARTI;
 };
 
 const DeityPage: React.FC = () => {
   const { id, type } = useParams<{ id?: string; type?: string }>();
+  const navigate = useNavigate();
   const [deity, setDeity] = useState<Deity | null>(null);
   const [contentType, setContentType] = useState<ContentType>(ContentType.AARTI);
   const [content, setContent] = useState<DevotionalContent | null>(null);
@@ -64,7 +67,7 @@ const DeityPage: React.FC = () => {
   //   setMeta(updatedMeta);
   // }, [deity, currentContentType]);
 
-  
+
 
   useEffect(() => {
     if (!deity) return;
@@ -73,7 +76,7 @@ const DeityPage: React.FC = () => {
       try {
         // Use deity.name for prompt readability; STATIC_CONTENT lookup is case-insensitive.
         const data = await fetchDevotionalContent(deity.name, contentType);
-        let updatedMeta = getPageMeta(deity.name,deity.hindiName, deity.id,contentType);
+        let updatedMeta = getPageMeta(deity.name, deity.hindiName, deity.id, contentType);
         setContent(data);
       } catch (err) {
         console.error(err);
@@ -101,6 +104,11 @@ const DeityPage: React.FC = () => {
         title = `${deityName} Mantra | ${hindiName} मंत्र | भक्ति वंदन`;
         description = `Chant ${deityName} Mantra for spiritual growth, positivity, and divine grace on Bhakti Vandan.`;
         canonicalType = 'mantra';
+        break;
+      case ContentType.INSIGHTS:
+        title = `${deityName} Significance & Benefits | ${hindiName} महिमा और लाभ | भक्ति वंदन`;
+        description = `Discover the spiritual significance, history, and benefits of worshiping ${deityName}. Deep insights into ${hindiName} on Bhakti Vandan.`;
+        canonicalType = 'insights';
         break;
       default:
         title = `${deityName} Aarti Lyrics in Hindi | ${hindiName} आरती | भक्ति वंदन`;
@@ -133,11 +141,16 @@ const DeityPage: React.FC = () => {
         path: "aarti",
         description: `Read ${deityName} Aarti lyrics in Hindi (${hindiName} आरती). A devotional hymn to seek divine blessings and inner peace.`,
       },
+      [ContentType.INSIGHTS]: {
+        label: "Insights",
+        path: "insights",
+        description: `Discover the spiritual significance and benefits of worshiping ${deityName} (${hindiName} महिमा).`,
+      },
     };
-  
+
     const data = typeMap[type];
     const url = `https://www.bhaktivandan.com/${data.path}/${deityId}`;
-  
+
     return {
       "@context": "https://schema.org",
       "@type": "Article",
@@ -161,7 +174,7 @@ const DeityPage: React.FC = () => {
       url,
     };
   };
-  
+
 
   const meta = useMemo(() => {
     if (!deity) return null;
@@ -172,7 +185,7 @@ const DeityPage: React.FC = () => {
     if (!deity) return null;
     return getSchema(deity.name, deity.hindiName, deity.id, currentContentType);
   }, [deity, currentContentType]);
-  
+
 
   // Update document title when meta changes to ensure immediate title updates
   useEffect(() => {
@@ -180,7 +193,7 @@ const DeityPage: React.FC = () => {
       document.title = meta.title;
     }
   }, [meta]);
- 
+
 
   if (!deity || !meta) {
     return (
@@ -192,63 +205,62 @@ const DeityPage: React.FC = () => {
   }
   return (
     <div className="min-h-screen bg-[#fffbf2] text-stone-800 font-sans selection:bg-orange-200 flex flex-col font-light">
-    <Helmet key={`${id}-${type}-${currentContentType}`}>
-      <title>{meta.title}</title>
+      <Helmet key={`${id}-${type}-${currentContentType}`}>
+        <title>{meta.title}</title>
 
-      <meta
-        name="description"
-        content={[
-          `${deity.name} ${contentType.toLowerCase()}`,
-          `${deity.name} ${contentType.toLowerCase()} lyrics`,
-          `${deity.hindiName}`,
-          `${deity.hindiName} ${
-            contentType === ContentType.CHALISA
+        <meta
+          name="description"
+          content={[
+            `${deity.name} ${contentType.toLowerCase()}`,
+            `${deity.name} ${contentType.toLowerCase()} lyrics`,
+            `${deity.hindiName}`,
+            `${deity.hindiName} ${contentType === ContentType.CHALISA
               ? "चालीसा"
               : contentType === ContentType.MANTRA
-              ? "मंत्र"
-              : "आरती"
-          }`,
-          "bhakti",
-          "devotional prayer",
-          "hindu aarti",
-        ].join(", ")}
-      />
+                ? "मंत्र"
+                : "आरती"
+            }`,
+            "bhakti",
+            "devotional prayer",
+            "hindu aarti",
+          ].join(", ")}
+        />
 
-      {/* <link
+        {/* <link
         rel="canonical"
         href={meta.canonical}
       /> */}
 
-      {/* Open Graph (for WhatsApp / Facebook sharing) */}
-      <meta
-        property="og:title"
-        content={meta.title}
-      />
-      <meta
-        property="og:description"
-        content={meta.description}
-      />
-      <meta
-        property="og:type"
-        content="article"
-      />
-      <meta
-        property="og:url"
-        content={meta.canonical}
-      />
-      <meta
-        property="og:image"
-        content={getDeityImage(deity.image)}
-      />
-
-      {/* JSON-LD Structured Data */}
-      {schema && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        {/* Open Graph (for WhatsApp / Facebook sharing) */}
+        <meta
+          property="og:title"
+          content={meta.title}
         />
-      )}
-    </Helmet>
+        <meta
+          property="og:description"
+          content={meta.description}
+        />
+        <meta
+          property="og:type"
+          content="article"
+        />
+        <meta
+          property="og:url"
+          content={meta.canonical}
+        />
+        <meta
+          property="og:image"
+          content={getDeityImage(deity.image)}
+        />
+
+        {/* JSON-LD Structured Data */}
+        {schema && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          />
+        )}
+      </Helmet>
       {/* Header copied from App.tsx to match home header */}
       {/* <header className="sticky top-0 z-30 bg-white/90 backdrop-blur-md shadow-sm border-b border-orange-100">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -282,48 +294,82 @@ const DeityPage: React.FC = () => {
 
       <main className="max-w-6xl mx-auto px-4 py-8 md:py-4 flex-grow w-full">
         <div className="max-w-4xl mx-auto px-4">
-            {/* Top bar with deity info and content menu */}
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between mt-6 mb-6">
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-lg overflow-hidden bg-orange-50 flex items-center justify-center">
-                  <img src={getDeityImage(deity.image)} alt={deity.name} className="w-full h-full object-cover" onError={(e) => (e.currentTarget.src = FALLBACK_OM_SVG)} />
-                </div>
-                <div>
-                  <h2 className="text-2xl font-serif text-stone-800 font-[400]">{deity.hindiName}</h2>
-                  <p className="text-sm text-stone-500 hidden">{deity.hindiName}</p>
-                </div>
+          {/* Top bar with deity info and content menu */}
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between mt-6 mb-6">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-lg overflow-hidden bg-orange-50 flex items-center justify-center">
+                <img src={getDeityImage(deity.image)} alt={deity.name} className="w-full h-full object-cover" onError={(e) => (e.currentTarget.src = FALLBACK_OM_SVG)} />
               </div>
-
-              <div className="flex gap-2 justify-center md:justify-end mt-4 mb-4">
-                <a
-                  href={`/aarti/${deity.id}`}
-                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all inline-block ${
-                    currentContentType === ContentType.AARTI ? 'bg-orange-500 text-white shadow-md' : 'bg-white text-stone-600 border border-stone-200 hover:text-orange-600'
-                  }`}
-                >
-                  आरती
-                </a>
-                <a
-                  href={`/chalisa/${deity.id}`}
-                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all inline-block ${
-                    currentContentType === ContentType.CHALISA ? 'bg-orange-500 text-white shadow-md' : 'bg-white text-stone-600 border border-stone-200 hover:text-orange-600'
-                  }`}
-                >
-                  चालीसा
-                </a>
-                <a
-                  href={`/mantra/${deity.id}`}
-                  className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all inline-block ${
-                    currentContentType === ContentType.MANTRA ? 'bg-orange-500 text-white shadow-md' : 'bg-white text-stone-600 border border-stone-200 hover:text-orange-600'
-                  }`}
-                >
-                  मंत्र
-                </a>
+              <div>
+                <h2 className="text-2xl font-serif text-stone-800 font-[400]">{deity.hindiName}</h2>
+                <p className="text-sm text-stone-500 hidden">{deity.hindiName}</p>
               </div>
             </div>
 
-            <Reader content={content} loading={loading} onBack={() => window.location.href = '/'} />
+            <div className="flex gap-2 justify-center md:justify-end mt-4 mb-4">
+              <Link
+                to={`/aarti/${deity.id}`}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all inline-block ${currentContentType === ContentType.AARTI ? 'bg-orange-500 text-white shadow-md' : 'bg-white text-stone-600 border border-stone-200 hover:text-orange-600'
+                  }`}
+              >
+                आरती
+              </Link>
+              <Link
+                to={`/chalisa/${deity.id}`}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all inline-block ${currentContentType === ContentType.CHALISA ? 'bg-orange-500 text-white shadow-md' : 'bg-white text-stone-600 border border-stone-200 hover:text-orange-600'
+                  }`}
+              >
+                चालीसा
+              </Link>
+              <Link
+                to={`/mantra/${deity.id}`}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all inline-block ${currentContentType === ContentType.MANTRA ? 'bg-orange-500 text-white shadow-md' : 'bg-white text-stone-600 border border-stone-200 hover:text-orange-600'
+                  }`}
+              >
+                मंत्र
+              </Link>
+              <Link
+                to={`/insights/${deity.id}`}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all inline-block ${currentContentType === ContentType.INSIGHTS ? 'bg-orange-600 text-white shadow-md font-bold' : 'bg-white text-stone-600 border border-stone-200 hover:text-orange-600'
+                  }`}
+              >
+                दिव्य महिमा
+              </Link>
+            </div>
           </div>
+
+          {currentContentType === ContentType.INSIGHTS ? (
+            <div className="bg-white/80 backdrop-blur-md rounded-2xl p-6 md:p-10 shadow-xl border border-orange-100 animate-fade-in-up">
+              <div className="text-center mb-10">
+                <h3 className="text-3xl font-serif text-orange-800 mb-2">दिव्य महिमा और लाभ</h3>
+                <div className="w-20 h-1 bg-gradient-to-r from-orange-400 to-red-500 mx-auto rounded-full"></div>
+                <p className="mt-4 text-stone-600 italic">Exploring the spiritual significance of {deity.name}</p>
+              </div>
+
+              <div className="space-y-8">
+                {deity.insights?.map((insight, idx) => (
+                  <div key={idx} className="bg-orange-50/50 rounded-xl p-6 border border-orange-100/50 hover:bg-orange-50 transition-colors">
+                    <h4 className="text-xl font-serif text-orange-700 mb-3 flex items-center gap-2">
+                      <span className="w-8 h-8 bg-orange-200 rounded-full flex items-center justify-center text-orange-600 text-sm">{idx + 1}</span>
+                      {insight.title}
+                    </h4>
+                    <p className="text-stone-700 leading-relaxed font-[Noto Serif Devanagari] md:text-lg">
+                      {insight.content}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-12 pt-8 border-t border-orange-100 text-center">
+                <p className="text-stone-500 text-sm">
+                  This content is curated for spiritual seekers and summarized from traditional Vedic texts.
+                </p>
+              </div>
+            </div>
+          ) : (
+            <Reader content={content} loading={loading} onBack={() => navigate('/')} />
+          )}
+        </div>
       </main>
 
       {/* Footer copied from App.tsx */}
@@ -331,7 +377,7 @@ const DeityPage: React.FC = () => {
         <p className="font-serif text-orange-800/80 font-light">Made with devotion <span className="text-red-500 text-lg">♥</span></p>
         <p className="text-xs mt-2 opacity-60 font-light">&copy; {new Date().getFullYear()} Bhakti Vandan</p>
       </footer> */}
-      <Footer/>
+      <Footer />
     </div>
   );
 };

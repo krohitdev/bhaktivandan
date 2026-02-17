@@ -16,7 +16,13 @@ export enum DeityId {
 export enum ContentType {
   AARTI = 'Aarti',
   CHALISA = 'Chalisa',
-  MANTRA = 'Mantra'
+  MANTRA = 'Mantra',
+  INSIGHTS = 'Insights'
+}
+
+export interface SpiritualInsight {
+  title: string;
+  content: string;
 }
 
 export interface Deity {
@@ -26,6 +32,7 @@ export interface Deity {
   image: string;
   color: string;
   description: string;
+  insights?: SpiritualInsight[];
 }
 
 export interface DevotionalContent {

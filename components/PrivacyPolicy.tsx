@@ -78,17 +78,15 @@ const PrivacyPolicy: React.FC = () => {
                 </p>
               </section>
               <section>
-                <h3 className="text-2xl font-serif text-orange-700 mb-4">7. Google AdSense और विज्ञापन कुकीज़</h3>
-                <p>
-                  हमारी वेबसाइट पर Google AdSense का उपयोग किया जा सकता है, जो Google Inc. द्वारा प्रदान की जाने वाली एक विज्ञापन सेवा है।
-                  Google, एक तृतीय-पक्ष विक्रेता के रूप में, हमारी वेबसाइट पर विज्ञापन दिखाने के लिए कुकीज़ (जिसमें DoubleClick कुकी शामिल है) का उपयोग करता है।
-
-                  DoubleClick कुकी Google और उसके भागीदारों को उपयोगकर्ताओं की इस और अन्य वेबसाइटों पर की गई यात्राओं के आधार पर विज्ञापन दिखाने की अनुमति देती है।
-
-                  उपयोगकर्ता Google विज्ञापन सेटिंग्स पर जाकर व्यक्तिगत विज्ञापनों (interest-based ads) को अक्षम कर सकते हैं।
-
-                  तृतीय-पक्ष विज्ञापन सर्वर या नेटवर्क अपनी विज्ञापनों और लिंक में कुकीज़, JavaScript या Web Beacons जैसी तकनीकों का उपयोग कर सकते हैं, जिन पर हमारा कोई नियंत्रण नहीं होता।
-                </p>
+                <h3 className="text-2xl font-serif text-orange-700 mb-4">7. Google AdSense और DoubleClick कुकी (Cookies)</h3>
+                <div className="space-y-4">
+                  <p>
+                    Google, एक तृतीय-पक्ष विक्रेता के रूप में, हमारी वेबसाइट पर विज्ञापन दिखाने के लिए कुकीज़ का उपयोग करता है। Google द्वारा DoubleClick कुकी का उपयोग उसके और उसके भागीदारों को हमारे उपयोगकर्ताओं की इस और/या इंटरनेट पर अन्य वेबसाइटों पर की गई पिछली यात्राओं के आधार पर विज्ञापन दिखाने की अनुमति देता है।
+                  </p>
+                  <p>
+                    उपयोगकर्ता <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" className="text-orange-600 underline">Google विज्ञापन सेटिंग्स</a> पर जाकर रुचि-आधारित विज्ञापनों (Personalized ads) के लिए DoubleClick कुकी के उपयोग को अक्षम कर सकते हैं। विकल्प के रूप में, आप <a href="https://www.aboutads.info" target="_blank" rel="noopener noreferrer" className="text-orange-600 underline">aboutads.info</a> पर जाकर तृतीय-पक्ष विक्रेता द्वारा व्यक्तिगत विज्ञापनों के लिए कुकीज़ के उपयोग को अक्षम कर सकते हैं।
+                  </p>
+                </div>
               </section>
 
               <section>
@@ -112,7 +110,7 @@ const PrivacyPolicy: React.FC = () => {
                 </p>
               </section>
 
-              
+
 
               <section>
                 <h3 className="text-2xl font-serif text-orange-700 mb-4">11. हमसे संपर्क करें (Contact Us)</h3>
