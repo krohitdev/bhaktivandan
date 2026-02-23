@@ -10,6 +10,7 @@ const CONTENT_TYPES = [
   ContentType.AARTI,
   ContentType.CHALISA,
   ContentType.MANTRA,
+  ContentType.INSIGHTS,
 ];
 
 // Convert enum → route segment
@@ -19,6 +20,8 @@ const typeToPath = (type: ContentType) => {
       return "chalisa";
     case ContentType.MANTRA:
       return "mantra";
+    case ContentType.INSIGHTS:
+      return "insights";
     default:
       return "aarti";
   }
@@ -39,16 +42,16 @@ DEITIES.forEach((deity) => {
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls
-  .map(
-    (url) => `
+    .map(
+      (url) => `
   <url>
     <loc>${BASE_URL}${url}</loc>
     <changefreq>monthly</changefreq>
     <priority>${url === "/" ? "1.0" : "0.8"}</priority>
   </url>
 `
-  )
-  .join("")}
+    )
+    .join("")}
 </urlset>
 `;
 

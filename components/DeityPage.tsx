@@ -226,10 +226,10 @@ const DeityPage: React.FC = () => {
           ].join(", ")}
         />
 
-        {/* <link
-        rel="canonical"
-        href={meta.canonical}
-      /> */}
+        <link
+          rel="canonical"
+          href={meta.canonical}
+        />
 
         {/* Open Graph (for WhatsApp / Facebook sharing) */}
         <meta
@@ -343,7 +343,8 @@ const DeityPage: React.FC = () => {
               <div className="text-center mb-10">
                 <h3 className="text-3xl font-serif text-orange-800 mb-2">दिव्य महिमा और लाभ</h3>
                 <div className="w-20 h-1 bg-gradient-to-r from-orange-400 to-red-500 mx-auto rounded-full"></div>
-                <p className="mt-4 text-stone-600 italic">Exploring the spiritual significance of {deity.name}</p>
+                {/* <p className="mt-4 text-stone-600 italic">Exploring the spiritual significance of {deity.name}</p> */}
+                <p className="mt-4 text-stone-600 italic">{deity.hindiName} के आध्यात्मिक महत्व की खोज </p>
               </div>
 
               <div className="space-y-8">

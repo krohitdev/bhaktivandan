@@ -17,7 +17,6 @@ const Analytics = () => {
   const location = useLocation();
   useEffect(() => {
     pageView(location.pathname);
-    console.log('>>', location.pathname);
   }, [location]);
   return null;
 };
