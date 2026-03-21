@@ -10,7 +10,7 @@ export const fetchDevotionalContent = async (
   language: string = 'Hindi'
 ): Promise<DevotionalContent> => {
   // Find the deity ID based on the name (case-insensitive simple match)
-  const deityKey = Object.keys(STATIC_CONTENT).find(key => 
+  const deityKey = Object.keys(STATIC_CONTENT).find(key =>
     key.toLowerCase() === deityName.toLowerCase()
   );
 
@@ -22,7 +22,7 @@ export const fetchDevotionalContent = async (
   }
 
   // Fallback: Use Gemini to generate content dynamically
-  try {
+  /* try {
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const prompt = `Generate a ${contentType} for Hindu deity ${deityName}. 
     Output strictly in JSON format with the following structure:
@@ -52,13 +52,13 @@ export const fetchDevotionalContent = async (
     }
   } catch (err) {
       console.error("Error generating content via Gemini:", err);
-  }
+  } */
 
   // Ultimate Fallback if API fails
   return {
     title: `${contentType} for ${deityName}`,
     verses: [
-     "सामग्री तैयार की जा रही है।", "कृपया 'ॐ' का जाप करें और दिव्य स्वरूप का ध्यान करें।", "शांति, शांति, शांति।"
+      "सामग्री तैयार की जा रही है।", "कृपया 'ॐ' का जाप करें और दिव्य स्वरूप का ध्यान करें।", "शांति, शांति, शांति।"
     ],
     meaning: "भक्ति हृदय में निवास करती है,\nकेवल शब्दों में नहीं।"
   };
@@ -71,7 +71,7 @@ export const sendChatMessage = async (
   newMessage: string
 ): Promise<string> => {
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-  
+
   // Format history for the SDK
   // Note: The SDK expects 'user' or 'model' roles, which matches our type.
   const chatHistory = history.map(h => ({
@@ -83,7 +83,7 @@ export const sendChatMessage = async (
     model: 'gemini-2.5-flash',
     history: chatHistory,
     config: {
-        systemInstruction: "You are 'Pandit Ji', a knowledgeable and respectful Hindu spiritual guide. You answer questions about deities, rituals, festivals, and philosophy (Dharma). Your tone is calm, wise, and polite. Keep answers concise and helpful."
+      systemInstruction: "You are 'Pandit Ji', a knowledgeable and respectful Hindu spiritual guide. You answer questions about deities, rituals, festivals, and philosophy (Dharma). Your tone is calm, wise, and polite. Keep answers concise and helpful."
     }
   });
 
@@ -95,7 +95,7 @@ export const sendChatMessage = async (
 
 export const generateDivineImage = async (prompt: string): Promise<string | null> => {
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-  
+
   try {
     // Using gemini-2.5-flash-image for general image generation as per guidelines.
     // Ideally prompts should be enhanced for style.
@@ -114,11 +114,11 @@ export const generateDivineImage = async (prompt: string): Promise<string | null
     // Iterate through parts to find the image
     const parts = response.candidates?.[0]?.content?.parts;
     if (parts) {
-        for (const part of parts) {
-           if (part.inlineData) {
-               return `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`;
-           }
+      for (const part of parts) {
+        if (part.inlineData) {
+          return `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`;
         }
+      }
     }
   } catch (error) {
     console.error("Image generation error:", error);

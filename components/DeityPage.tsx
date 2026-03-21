@@ -51,6 +51,7 @@ const DeityPage: React.FC = () => {
 
   useEffect(() => {
     if (!id) return;
+    window.scrollTo(0, 0);
     const found = DEITIES.find(d => d.id === id);
     setDeity(found || null);
   }, [id]);
@@ -370,6 +371,43 @@ const DeityPage: React.FC = () => {
           ) : (
             <Reader content={content} loading={loading} onBack={() => navigate('/')} />
           )}
+
+          {/* Explore More Section */}
+          <div className="mt-16 pt-12 border-t border-orange-100">
+            <h3 className="text-2xl font-serif text-stone-800 mb-8 text-center">Explore More Devotional Content</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {DEITIES.filter(d => d.id !== deity.id).slice(0, 4).map((otherDeity) => (
+                <Link
+                  key={otherDeity.id}
+                  to={`/aarti/${otherDeity.id}`}
+                  className="group block bg-white rounded-xl p-3 border border-orange-100 shadow-sm hover:shadow-md transition-all hover:-translate-y-1"
+                >
+                  <div className="aspect-square rounded-lg overflow-hidden mb-3 bg-orange-50">
+                    <img
+                      src={getDeityImage(otherDeity.image)}
+                      alt={otherDeity.name}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      onError={(e) => (e.currentTarget.src = FALLBACK_OM_SVG)}
+                    />
+                  </div>
+                  <h4 className="text-center font-serif text-stone-700 group-hover:text-orange-600 transition-colors">
+                    {otherDeity.hindiName}
+                  </h4>
+                </Link>
+              ))}
+            </div>
+            <div className="text-center mt-8">
+              <Link
+                to="/"
+                className="inline-flex items-center gap-2 text-orange-600 font-medium hover:text-orange-700 transition-colors"
+              >
+                <span>View All Deities</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </Link>
+            </div>
+          </div>
         </div>
       </main>
 

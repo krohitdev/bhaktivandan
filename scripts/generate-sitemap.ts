@@ -28,7 +28,11 @@ const typeToPath = (type: ContentType) => {
 };
 
 const urls: string[] = [
-  "/", // homepage
+  "/",
+  "/about",
+  "/privacy-policy",
+  "/terms-and-conditions",
+  "/contact-us",
 ];
 
 // Generate URLs from DEITIES
@@ -46,8 +50,8 @@ ${urls
       (url) => `
   <url>
     <loc>${BASE_URL}${url}</loc>
-    <changefreq>monthly</changefreq>
-    <priority>${url === "/" ? "1.0" : "0.8"}</priority>
+    <changefreq>${url === "/" ? "daily" : "monthly"}</changefreq>
+    <priority>${url === "/" ? "1.0" : url.startsWith("/aarti") || url.startsWith("/chalisa") ? "0.8" : "0.5"}</priority>
   </url>
 `
     )
@@ -55,8 +59,13 @@ ${urls
 </urlset>
 `;
 
-// Write to dist/
-const outputPath = path.resolve("dist", "sitemap.xml");
-fs.writeFileSync(outputPath, sitemap.trim());
+// Write to public/ and dist/ (if exists)
+const publicPath = path.resolve("public", "sitemap.xml");
+fs.writeFileSync(publicPath, sitemap.trim());
+
+const distPath = path.resolve("dist", "sitemap.xml");
+if (fs.existsSync(path.resolve("dist"))) {
+  fs.writeFileSync(distPath, sitemap.trim());
+}
 
 console.log("✅ sitemap.xml generated successfully");
