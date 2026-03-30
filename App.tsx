@@ -5,8 +5,9 @@ import Reader from './components/Reader';
 import { fetchDevotionalContent } from './services/geminiService';
 import { useNavigate, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import Footer from './components/Footer';
 import Header from './components/Header';
+import Footer from './components/Footer';
+import DailyWisdom from './components/DailyWisdom';
 import './App.css';
 
 // Local Fallback SVG for Om Symbol
@@ -221,8 +222,10 @@ function App() {
       <Header />
 
       {/* Main Content */}
-      <main className="max-w-6xl mx-auto px-4 py-8 md:py-8 flex-grow w-full">
-
+      <main className="max-w-6xl mx-auto px-4 py-8 md:py-12 flex-grow w-full">
+        <DailyWisdom />
+        
+        {/* Search Bar - only on homepage */}
         {!selectedDeity ? (
           /* Deity Grid */
           <div className="animate-fade-in-up">

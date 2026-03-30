@@ -369,7 +369,12 @@ const DeityPage: React.FC = () => {
               </div>
             </div>
           ) : (
-            <Reader content={content} loading={loading} onBack={() => navigate('/')} />
+            <Reader 
+              content={content} 
+              contentType={currentContentType}
+              loading={loading} 
+              onBack={() => navigate('/')} 
+            />
           )}
 
           {/* Explore More Section */}

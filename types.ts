@@ -44,6 +44,17 @@ export interface DevotionalContent {
     [key: string]: string[] | undefined; // Allow other section types
   };
   meaning?: string;
+  meaningEn?: string; // English summary for AdSense and international users
+  audioUrl?: string; // Optional audio file URL
+  youtubeId?: string; // YouTube video ID for embedding
+}
+
+export interface DailyQuote {
+  id: string;
+  verse: string;
+  translation: string;
+  englishTranslation: string;
+  source: string; // e.g., "Bhagavad Gita"
 }
 
 export interface ChatMessage {

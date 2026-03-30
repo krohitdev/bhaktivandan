@@ -1,4 +1,4 @@
-import { Deity, DeityId, ContentType, DevotionalContent } from './types';
+import { Deity, DeityId, ContentType, DevotionalContent, DailyQuote } from './types';
 
 // Using classic traditional Indian art styles (e.g., Raja Ravi Varma) for a devotional feel.
 export const DEITIES: Deity[] = [
@@ -153,8 +153,9 @@ export const STATIC_CONTENT: Record<string, Record<string, DevotionalContent>> =
         "दीनन की लाज रखो, शंभु सुतकारी ।\n कामना को पूर्ण करो, जाऊं बलिहारी ॥",
         "जय गणेश जय गणेश, जय गणेश देवा ।\nमाता जाकी पार्वती, पिता महादेवा ॥",
       ],
-      // meaning: "This Aarti praises Lord Ganesha, describing him as the one with one tusk, four arms, and the son of Parvati and Shiva. It asks for the removal of obstacles and the granting of boons like sight to the blind and wealth to the poor."
-      meaning: "इस आरती में भगवान गणेश की स्तुति की गई है, जिसमें उन्हें एक दांत, चार भुजाओं वाले और पार्वती व शिव के पुत्र के रूप में वर्णित किया गया है। इसमें विघ्नों के निवारण और अंधे को दृष्टि और निर्धन को धन जैसे वरदानों की प्रार्थना की गई है।"
+      meaning: "इस आरती में भगवान गणेश की स्तुति की गई है, जिसमें उन्हें एक दांत, चार भुजाओं वाले और पार्वती व शिव के पुत्र के रूप में वर्णित किया गया है। इसमें विघ्नों के निवारण और अंधे को दृष्टि और निर्धन को धन जैसे वरदानों की प्रार्थना की गई है।",
+      meaningEn: "This Aarti praises Lord Ganesha, describing him as the one with one tusk, four arms, and the son of Goddess Parvati and Lord Shiva. It is a prayer for the removal of all obstacles and the fulfillment of desires, such as vision for the blind and prosperity for the poor.",
+      youtubeId: "GKMSZ8SN0IA"
     },
     [ContentType.CHALISA]: {
       title: "श्री गणेश चालीसा",
@@ -239,7 +240,9 @@ export const STATIC_CONTENT: Record<string, Record<string, DevotionalContent>> =
         "लंक विध्वंस किये रघुराई । तुलसीदास स्वामी कीर्ति गाई ॥",
         "आरती कीजै हनुमान लला की । दुष्ट दलन रघुनाथ कला की ॥"
       ],
-      meaning: "अंजनी के पुत्र हनुमान को समर्पित आरती, जिसमें उनकी शक्ति, भगवान राम के प्रति उनकी भक्ति और बुराई के नाश में उनकी भूमिका की प्रशंसा की गई है।"
+      meaning: "अंजनी के पुत्र हनुमान को समर्पित आरती, जिसमें उनकी शक्ति, भगवान राम के प्रति उनकी भक्ति और बुराई के नाश में उनकी भूमिका की प्रशंसा की गई है।",
+      meaningEn: "This Aarti is dedicated to Hanuman, the beloved son of Anjana. It glorifies his immense strength, his unwavering devotion to Lord Ram, and his role in destroying evil forces.",
+      youtubeId: "YRB6Xxdm3Do"
     },
     [ContentType.CHALISA]: {
       title: "श्री हनुमान चालीसा",
@@ -315,7 +318,9 @@ export const STATIC_CONTENT: Record<string, Record<string, DevotionalContent>> =
         "ब्रह्मा विष्णु सदाशिव जानत अविवेका । \nप्रणवाक्षर में शोभित ये तीनों एका ॥ ॐ जय शिव...",
         "त्रिगुणस्वामी जी की आरति जो कोइ नर गावे । \nकहत शिवानंद स्वामी सुख संपति पावे ॥ ॐ जय शिव...",
       ],
-      meaning: "भगवान शिव की आरती (ॐ जय शिव ओंकारा) सर्वोच्च भगवान शिव की महिमा का गुणगान करती है, उन्हें ब्रह्मा और विष्णु के मूल के रूप में स्वीकार करती है।"
+      meaning: "भगवान शिव की आरती (ॐ जय शिव ओंकारा) सर्वोच्च भगवान शिव की महिमा का गुणगान करती है, उन्हें ब्रह्मा और विष्णु के मूल के रूप में स्वीकार करती है।",
+      meaningEn: "The Shiva Aarti (Om Jai Shiv Omkara) glorifies the supreme Lord Shiva, acknowledging him as the origin of Brahma and Vishnu. It depicts his majestic form and his role in the cosmic creation and destruction.",
+      youtubeId: "BhwOproElxU"
     },
     [ContentType.CHALISA]: {
       title: "श्री शिव चालीसा",
@@ -402,7 +407,9 @@ export const STATIC_CONTENT: Record<string, Record<string, DevotionalContent>> =
         "जय अम्बे गौरी, मैया जय श्यामा गौरी ।\nतुमको निशदिन ध्यावत, हरि ब्रह्मा शिवरी ॥",
 
       ],
-      meaning: "मां दुर्गा की आरती, उनके तेजस्वी रूप की प्रशंसा करते हुए और उनका आशीर्वाद मांगते हुए की जाती है।"
+      meaning: "मां दुर्गा की आरती, उनके तेजस्वी रूप की प्रशंसा करते हुए और उनका आशीर्वाद मांगते हुए की जाती है।",
+      meaningEn: "This Aarti is dedicated to Goddess Durga, praising her radiant and powerful form. It seeks her protection and blessings to overcome difficulties and achieve prosperity.",
+      youtubeId: "Kw6J7e8lTDM"
     },
     [ContentType.CHALISA]: {
       title: "श्री दुर्गा चालीसा",
@@ -472,7 +479,9 @@ export const STATIC_CONTENT: Record<string, Record<string, DevotionalContent>> =
         "महालक्ष्मी जी की आरती, जो कोई नर गाता ।\nउँर आंनद समाता, पाप उतर जाता ॥ॐ जय लक्ष्मी माता...॥",
         "ॐ जय लक्ष्मी माता, मैया जय लक्ष्मी माता ।\nतुमको निशदिन ध्यावत, हर विष्णु विधाता ॥",
       ],
-      meaning: "धन और समृद्धि की देवी लक्ष्मी की आरती।"
+      meaning: "धन और समृद्धि की देवी लक्ष्मी की आरती।",
+      meaningEn: "This Aarti is sung in praise of Goddess Lakshmi, the deity of wealth, fortune, and prosperity. Devotees seek her presence in their homes to bring auspiciousness and success.",
+      youtubeId: "SyqgAt-T0iQ"
     },
     [ContentType.CHALISA]: {
       title: "श्री लक्ष्मी चालीसा",
@@ -546,7 +555,8 @@ export const STATIC_CONTENT: Record<string, Record<string, DevotionalContent>> =
         "श्री हरीदास के प्यारे तुम हो, मेरे मोहन जीवन धन हो।\nदेख युगल छवि बलि बलि जाऊं ॥ श्री बांके बिहारी...",
         "श्री बांके बिहारी तेरी आरती गाऊं, हे गिरिधर तेरी आरती गाऊं ।\nआरती गाऊं प्यारे आपको रिझाऊं, श्याम सुन्दर तेरी आरती गाऊं ॥",
       ],
-      meaning: "वनों में निवास करने वाले (कुंज बिहारी), पर्वतों को धारण करने वाले भगवान कृष्ण की आरती।"
+      meaning: "वनों में निवास करने वाले (कुंज बिहारी), पर्वतों को धारण करने वाले भगवान कृष्ण की आरती।",
+      youtubeId: "FEMR5alT7CY"
     },
     [ContentType.CHALISA]: {
       title: "श्री कृष्ण चालीसा",
@@ -702,7 +712,8 @@ export const STATIC_CONTENT: Record<string, Record<string, DevotionalContent>> =
         "माँ सरस्वती की आरती, जो कोई जन गावे ।\nहितकारी सुखकारी, ज्ञान भक्ति पावे ॥जय जय सरस्वती माता...॥",
         "जय सरस्वती माता, जय जय सरस्वती माता ।\nसदगुण वैभव शालिनी, त्रिभुवन विख्याता ॥",
       ],
-      meaning: "ज्ञान और कला की प्रतीक देवी सरस्वती की आरती।"
+      meaning: "ज्ञान और कला की प्रतीक देवी सरस्वती की आरती।",
+      youtubeId: "TTVAyS9wOV4"
     },
     [ContentType.CHALISA]: {
       title: "श्री सरस्वती चालीसा",
@@ -775,7 +786,8 @@ export const STATIC_CONTENT: Record<string, Record<string, DevotionalContent>> =
         "विषय-विकार मिटाओ, पाप हरो देवा, स्वमी पाप(कष्ट) हरो देवा ।\nश्रद्धा भक्ति बढ़ाओ, श्रद्धा भक्ति बढ़ाओ, सन्तन की सेवा ॥",
         "ॐ जय जगदीश हरे, स्वामी! जय जगदीश हरे ।\nभक्त जनों के संकट, क्षण में दूर करे ॥ॐ जय जगदीश हरे...॥",
       ],
-      meaning: "ॐ जय जगदीश हरे, ब्रह्मांड के स्वामी भगवान विष्णु के लिए गाया जाने वाला सार्वभौमिक आरती है।"
+      meaning: "ॐ जय जगदीश हरे, ब्रह्मांड के स्वामी भगवान विष्णु के लिए गाया जाने वाला सार्वभौमिक आरती है।",
+      youtubeId: "3ucCEjXS9n8"
     },
     [ContentType.CHALISA]: {
       title: "श्री विष्णु चालीसा",
@@ -941,7 +953,8 @@ export const STATIC_CONTENT: Record<string, Record<string, DevotionalContent>> =
         "अम्बे तू है जगदम्बे काली, \nजय दुर्गे खप्पर वाली |",
         "तेरे ही गुण गायें भारती, \nओ मैया हम सब उतारें तेरी आरती ||"
       ],
-      meaning: "यह आरती माँ काली की अजेय शक्ति और ममता का वर्णन करती है, जो भक्तों के कष्टों को दूर कर उन्हें अभय प्रदान करती हैं। इसमें देवी को पापियों के लिए काल और दीन-दुखियों के लिए करुणा की देवी के रूप में दर्शाया गया है।"
+      meaning: "यह आरती माँ काली की अजेय शक्ति और ममता का वर्णन करती है, जो भक्तों के कष्टों को दूर कर उन्हें अभय प्रदान करती हैं। इसमें देवी को पापियों के लिए काल और दीन-दुखियों के लिए करुणा की देवी के रूप में दर्शाया गया है।",
+      youtubeId: "dVTUUtOHUCA"
     },
     [ContentType.CHALISA]: {
       title: "श्री महाकाली चालीसा",
@@ -1012,3 +1025,41 @@ export const STATIC_CONTENT: Record<string, Record<string, DevotionalContent>> =
     }
   },
 };
+
+export const DAILY_QUOTES: DailyQuote[] = [
+  {
+    id: "gita-2-47",
+    verse: "कर्मण्येवाधिकारस्ते मा फलेषु कदाचन। मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि॥",
+    translation: "आपका अधिकार केवल कर्म करने में है, उसके फलों में नहीं। इसलिए आप स्वयं को अपने कर्मों के परिणामों का कारण न मानें और न ही अकर्मण्यता में आसक्त हों।",
+    englishTranslation: "You have a right to perform your prescribed duties, but you are not entitled to the fruits of your actions. Never consider yourself to be the cause of the results of your activities, nor be attached to inaction.",
+    source: "भागवद गीता 2.47"
+  },
+  {
+    id: "gita-6-5",
+    verse: "उद्धरेदात्मनात्मानं नात्मानमवसादयेत्। आत्मैव ह्यात्मनो बन्धुरात्मैव रिपुरात्मनः॥",
+    translation: "अपने प्रयासों से स्वयं का उत्थान करें, और स्वयं को पतन की ओर न जाने दें। क्योंकि मन ही स्वयं का मित्र और स्वयं का शत्रु भी हो सकता है।",
+    englishTranslation: "Elevate yourself through your own effort, and do not let yourself degrade. For the mind can be the friend and also the enemy of the self.",
+    source: "भागवद गीता 6.5"
+  },
+  {
+    id: "rig-veda-10-191-2",
+    verse: "सं गच्छध्वं सं वदध्वं सं वो मनांसि जानताम्।",
+    translation: "साथ चलें, साथ बोलें, आपके मन एक समान हों।",
+    englishTranslation: "Walk together, speak together, let your minds be all of one accord.",
+    source: "ऋग्वेद 10.191.2"
+  },
+  {
+    id: "vp-1-19-65",
+    verse: "सर्वे भवन्तु सुखिनः सर्वे सन्तु निरामयाः। सर्वे भद्राणि पश्यन्तु मा कश्चिद्दुःखभाग्भवेत्॥",
+    translation: "सभी सुखी रहें, सभी रोगमुक्त रहें। सभी को शुभ दर्शन हों, किसी को कष्ट न हो।",
+    englishTranslation: "May all be happy, may all be free from illness. May all see what is auspicious, may no one suffer.",
+    source: "विष्णु पुराण"
+  },
+  {
+    id: "gita-18-65",
+    verse: "मन्मना भव मद्भक्तो मद्याजी मां नमस्कुरु। मामेवैष्यसि सत्यं ते प्रतिजाने प्रियोऽसि मे॥",
+    translation: "सदा मेरा स्मरण करो, मेरे भक्त बनो, मेरी उपासना करो और मुझे प्रणाम करो। इस प्रकार तुम निश्चय ही मेरे पास आओगे। मैं तुमसे यह वादा करता हूँ क्योंकि तुम मेरे प्रिय मित्र हो।",
+    englishTranslation: "Always think of Me, become My devotee, worship Me and offer your homage unto Me. Thus you will come to Me without fail. I promise you this because you are My very dear friend.",
+    source: "भागवद गीता 18.65"
+  }
+];
